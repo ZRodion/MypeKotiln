@@ -1,19 +1,15 @@
 package com.example.mypekotlin
 
-import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.example.mypekotlin.databinding.ActivityMainBinding
-import com.example.mypekotlin.model.User
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -25,31 +21,43 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-        navHostFragment = supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
         setupWithNavController(binding.bottomNav, navHostFragment.navController)
 
+
+        //return -1, when language is not set
+        val position = runBlocking {
+            PreferencesRepository.get().storedLanguagePosition.first()
+        }
+        if(position!=-1){
+            setLocale(position)
+        }
+
         lifecycleScope.launch {
-            PreferencesRepository.get().storedLanguagePosition.collect{position ->
-                val array = resources.getStringArray(R.array.languages)
-                setLocale(array[position])
+            PreferencesRepository.get().storedLanguagePosition.collect {
+                if (it != position) {
+                    setLocale(it)
+                }
             }
         }
     }
 
-    private fun setLocale(language: String) {
+    private fun setLocale(position: Int) {
+        val array = resources.getStringArray(R.array.languages)
         val configuration = resources.configuration
-
-        val locale = when(language){
+        val locale = when (array[position]) {
             "English" -> "en"
             "Russian" -> "ru"
             else -> "en"
         }
-        if(Locale(locale) != configuration.locale){
+        if (Locale(locale) != configuration.locale) {
             configuration.locale = Locale(locale)
             resources.updateConfiguration(configuration, resources.displayMetrics)
             onConfigurationChanged(configuration)
-            recreate()
+            startActivity(Intent(this, MainActivity::class.java))
+            overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
+            finish()
         }
     }
 }

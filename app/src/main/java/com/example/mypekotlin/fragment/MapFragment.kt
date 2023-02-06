@@ -37,7 +37,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 android.Manifest.permission.ACCESS_FINE_LOCATION
             ) != PackageManager.PERMISSION_GRANTED
         ) {
-            findNavController().navigate(R.id.permissionFragment)
+            findNavController().navigate(
+                MapFragmentDirections.actionMapFragmentToPermissionFragment()
+            )
         }
     }
 

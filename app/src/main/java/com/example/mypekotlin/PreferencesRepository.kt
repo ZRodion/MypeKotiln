@@ -4,20 +4,16 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.*
 import androidx.datastore.preferences.preferencesDataStoreFile
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
-import java.util.UUID
+import java.util.*
 
 class PreferencesRepository private constructor(
     private val dataStore: DataStore<Preferences>,
-    private val coroutineScope: CoroutineScope = GlobalScope
 ){
-
-    val storedId: Flow<UUID> = dataStore.data.map {
-        UUID.fromString(it[USER_ID])
+    val storedId: Flow<String?> = dataStore.data.map {
+        it[USER_ID]
     }.distinctUntilChanged()
 
     suspend fun setStoredId(id: UUID){
@@ -27,7 +23,7 @@ class PreferencesRepository private constructor(
     }
 
     val storedLanguagePosition: Flow<Int> = dataStore.data.map {
-        it[LANGUAGE_POSITION] ?: 0
+        it[LANGUAGE_POSITION] ?: -1
     }.distinctUntilChanged()
 
     suspend fun setLanguagePosition(position: Int){

@@ -9,14 +9,17 @@
         android:id="@+id/mapFragment"
         android:name="com.example.mypekotlin.fragment.MapFragment"
         android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
+        tools:layout="@layout/fragment_map" >
+        <action
+            android:id="@+id/action_mapFragment_to_permissionFragment"
+            app:destination="@id/permissionFragment"
+            app:popUpTo="@+id/mapFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
     <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.mypekotlin.fragment.ProfileFragment"
         android:label="ProfileFragment" >
-        <action
-            android:id="@+id/input_user_data"
-            app:destination="@id/inputDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -25,7 +28,6 @@
     <fragment
         android:id="@+id/permissionFragment"
         android:name="com.example.mypekotlin.fragment.PermissionFragment"
-        android:label="fragment_permission"
         tools:layout="@layout/fragment_permission" />
     <dialog
         android:id="@+id/inputDialogFragment"
