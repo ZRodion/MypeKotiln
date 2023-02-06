@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/mapFragment"
         android:icon="@drawable/ic_menu_item_map"
-        android:title="@string/bottom_nav_map_title" />
+        android:title="@string/bottom_nav_map_title"/>
     <item
         android:id="@+id/profileFragment"
         android:icon="@drawable/ic_menu_item_profile"

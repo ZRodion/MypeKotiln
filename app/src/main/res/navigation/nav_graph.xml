@@ -7,20 +7,28 @@
 
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.mypekotlin.MapFragment"
+        android:name="com.example.mypekotlin.fragment.MapFragment"
         android:label="fragment_map"
         tools:layout="@layout/fragment_map" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.mypekotlin.ProfileFragment"
-        android:label="ProfileFragment" />
+        android:name="com.example.mypekotlin.fragment.ProfileFragment"
+        android:label="ProfileFragment" >
+        <action
+            android:id="@+id/input_user_data"
+            app:destination="@id/inputDialogFragment" />
+    </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.example.mypekotlin.SettingsFragment"
+        android:name="com.example.mypekotlin.fragment.SettingsFragment"
         android:label="SettingsFragment" />
     <fragment
         android:id="@+id/permissionFragment"
-        android:name="com.example.mypekotlin.PermissionFragment"
+        android:name="com.example.mypekotlin.fragment.PermissionFragment"
         android:label="fragment_permission"
         tools:layout="@layout/fragment_permission" />
+    <dialog
+        android:id="@+id/inputDialogFragment"
+        android:name="com.example.mypekotlin.fragment.InputDialogFragment"
+        android:label="InputDialogFragment" />
 </navigation>

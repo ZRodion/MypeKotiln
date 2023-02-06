@@ -1,17 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">MypeKotlin</string>
-    <string name="bottom_nav_map_title">map</string>
-    <string name="bottom_nav_profile_title">me</string>
-    <string name="bottom_nav_settings_title">settings</string>
+    <string name="bottom_nav_map_title">карта</string>
+    <string name="bottom_nav_profile_title">профиль</string>
+    <string name="bottom_nav_settings_title">настройки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="wrong_permission_text">something is missing</string>
+    <string name="wrong_permission_text">Чего-то не хватает</string>
     <string name="request_permission">request permission</string>
-    <string name="full_name_text_view">Full name</string>
-    <string name="personal_information_text_view">personal information</string>
+    <string name="full_name_text_view">Имя и фамилия</string>
+    <string name="personal_information_text_view">О себе</string>
     <string name="google_play_button">google play</string>
-    <string name="change_language_text_view">change language</string>
-    <string name="empty_full_name">enter your name and surname</string>
+    <string name="change_language_text_view">Сменить язык</string>
+    <string name="empty_full_name">Ввести имя и фамилию</string>
     <string name="empty_person_info">tell something about yourself</string>
     <string name="input_dialog_name">name</string>
     <string name="input_name_hint">input name</string>
@@ -19,9 +20,9 @@
     <string name="input_dialog_surname">surname</string>
     <string name="save_button">save</string>
     <string name="input_info_hint">Something about yourself</string>
-    <string name="input_dialog_info">Person information</string>
+    <string name="input_dialog_info">Инфа</string>
     <string name="edit_text_empty_error_message">%1$s must not be empty</string>
     <string name="edit_text_space_error_message">%1$s must not constrain spaces</string>
-    <string name="send_email_button">send email</string>
-    <string name="email_subject">feedback</string>
+    <string name="send_email_button">Отправить письмо</string>
+    <string name="email_subject">Отзыв</string>
 </resources>

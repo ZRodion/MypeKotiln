@@ -1,15 +1,13 @@
-package com.example.mypekotlin
+package com.example.mypekotlin.fragment
 
-import android.content.pm.PackageManager
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.mypekotlin.databinding.FragmentMapBinding
+import com.example.mypekotlin.R
 import com.example.mypekotlin.databinding.FragmentPermissionBinding
 
 class PermissionFragment : Fragment() {
@@ -44,5 +42,9 @@ class PermissionFragment : Fragment() {
         binding.requestPermissionButton.setOnClickListener {
             requestPermissionLauncher.launch(android.Manifest.permission.ACCESS_FINE_LOCATION)
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
