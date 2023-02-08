@@ -22,9 +22,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         setupWithNavController(binding.bottomNav, navHostFragment.navController)
-
 
         //return -1, when language is not set
         val position = runBlocking {
