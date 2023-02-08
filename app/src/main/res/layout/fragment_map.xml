@@ -10,14 +10,13 @@
         android:layout_height="match_parent"
         tools:context=".fragment.MapFragment" />
 
-    <ImageButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:src="@drawable/ic_current_location"
-        android:id="@+id/currentLoc"
-        android:layout_width="30sp"
-        android:layout_height="40sp"
+        android:id="@+id/currentLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignBottom="@id/google_map"
         android:layout_alignEnd="@id/google_map"
-        android:layout_alignRight="@id/google_map"
-        android:layout_marginRight="30sp"
-        android:layout_marginBottom="100sp"/>
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="64dp"/>
 </RelativeLayout>

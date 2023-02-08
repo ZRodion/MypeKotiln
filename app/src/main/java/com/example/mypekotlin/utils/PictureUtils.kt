@@ -31,6 +31,8 @@ fun getScaledBitmap(path: String, destWidth: Int, destHeight: Int): Bitmap {
     when (orientation) {
         6 -> matrix.postRotate(90f)
         8 -> matrix.postRotate(270f)
+        3 -> matrix.postRotate(180f)
+
     }
 
     return Bitmap.createBitmap(

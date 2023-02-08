@@ -1,14 +1,17 @@
 package com.example.mypekotlin.fragment
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.pm.PackageManager
 import android.location.Location
+import android.location.LocationManager
 import android.os.Bundle
 import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -40,6 +43,9 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     private lateinit var locationCallback: LocationCallback
+
+    private var userMarker: com.google.android.gms.maps.model.Marker? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +79,20 @@ class MapFragment : Fragment(), OnMapReadyCallback {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.currentLocationButton.setOnClickListener {
+            val mLocationManager = context?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+            val mGPS = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+            if(!mGPS){
+                Toast.makeText(requireContext(), getString(R.string.GPS_is_off), Toast.LENGTH_LONG).show()
+            }else{
+                userMarker?.let { animateCameraToMarker(it) }
+            }
+        }
+    }
+
     override fun onResume() {
         Log.d("MyTag", "onResume")
         super.onResume()
@@ -100,7 +120,6 @@ class MapFragment : Fragment(), OnMapReadyCallback {
                 }
             }
         }
-
     }
 
     private fun addMarker(marker: Marker): com.google.android.gms.maps.model.Marker? {
@@ -112,16 +131,23 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun animateCameraToLocation(location: Location){
+        animateCamera(location.latitude, location.longitude)
+    }
+    private fun animateCameraToMarker(marker: com.google.android.gms.maps.model.Marker){
+        animateCamera(marker.position.latitude, marker.position.longitude)
+    }
+    private fun animateCamera(latitude: Double, longitude: Double){
         map?.animateCamera(
             CameraUpdateFactory.newLatLngZoom(
                 LatLng(
                     /*markers[1].latitude,*/
-                    location.latitude,
-                    location.longitude
+                    latitude,
+                    longitude
                 ), 12f
             )
         )
     }
+
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
@@ -134,15 +160,13 @@ class MapFragment : Fragment(), OnMapReadyCallback {
     }
 
     private fun createLocationCallback() {
-        var marker: com.google.android.gms.maps.model.Marker? = null
-
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations){
-                    marker?.remove()
                     //to be called it only once
-                    if(marker == null) animateCameraToLocation(location)
-                    marker = addMarker(Marker("User", location.latitude, location.longitude))
+                    userMarker?.remove() ?: animateCameraToLocation(location)
+
+                    userMarker = addMarker(Marker("User", location.latitude, location.longitude))
                 }
             }
         }
