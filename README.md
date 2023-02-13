@@ -7,4 +7,4 @@
 - [X] Add current location
 - [ ] Dagger 2
 - [ ] Testing
-- [ ] Sign in
+- [X] Sign in
