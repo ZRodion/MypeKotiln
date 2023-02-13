@@ -12,18 +12,28 @@ import java.util.*
 class PreferencesRepository private constructor(
     private val dataStore: DataStore<Preferences>,
 ){
-    val storedId: Flow<String?> = dataStore.data.map {
-        it[USER_ID]
+    val storedId: Flow<UUID?> = dataStore.data.map {
+        val strId = it[USER_ID]
+        if(strId != null && strId != ""){
+            UUID.fromString(strId)
+        }else{
+            null
+        }
     }.distinctUntilChanged()
 
-    suspend fun setStoredId(id: UUID){
+    suspend fun setStoredId(id: UUID?){
         dataStore.edit {
-            it[USER_ID] = id.toString()
+            it[USER_ID] = if(id == null){
+                ""
+            }else{
+                id.toString()
+            }
+
         }
     }
 
     val storedLanguagePosition: Flow<Int> = dataStore.data.map {
-        it[LANGUAGE_POSITION] ?: -1
+        it[LANGUAGE_POSITION] ?: 0
     }.distinctUntilChanged()
 
     suspend fun setLanguagePosition(position: Int){

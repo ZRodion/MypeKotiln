@@ -25,4 +25,13 @@
     <string name="edit_text_space_error_message">%1$s must not constrain spaces</string>
     <string name="send_email_button">Отправить письмо</string>
     <string name="email_subject">Отзыв</string>
+    <string name="GPS_is_off">GPS выключен</string>
+    <string name="sign_up_button">Зарегать</string>
+    <string name="sign_in_button">Войти</string>
+    <string name="login_hint">Логин</string>
+    <string name="password_hint">Пароль</string>
+    <string name="name_hint">Имя</string>
+    <string name="surname_hint">Фамилия</string>
+    <string name="non_existent_account_error">Такого аккаунта не существует</string>
+    <string name="login_or_register">Войдите или зарегайтесь</string>
 </resources>

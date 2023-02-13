@@ -77,6 +77,10 @@ class SettingsFragment : Fragment() {
             intent.setType("message/rfc822");
             startActivity(Intent.createChooser(intent, "Choose an Email client :"));
         }
+
+        binding.signOutButton.setOnClickListener {
+            viewModel.signOut()
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

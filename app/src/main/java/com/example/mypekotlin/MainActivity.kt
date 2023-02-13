@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.NavigationUI.setupWithNavController
+import androidx.navigation.ui.NavigationUI
 import com.example.mypekotlin.databinding.ActivityMainBinding
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
@@ -21,20 +21,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        setupWithNavController(binding.bottomNav, navHostFragment.navController)
-
-        //return -1, when language is not set
         val position = runBlocking {
             PreferencesRepository.get().storedLanguagePosition.first()
         }
-        if(position!=-1){
-            setLocale(position)
-        }
+        setLocale(position)
+
+        loginCheck()
+
+        navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        NavigationUI.setupWithNavController(binding.bottomNav, navHostFragment.navController)
 
         lifecycleScope.launch {
             PreferencesRepository.get().storedLanguagePosition.collect {
+                //execute once at start
                 if (it != position) {
                     setLocale(it)
                 }
@@ -58,5 +58,21 @@ class MainActivity : AppCompatActivity() {
             overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
             finish()
         }
+    }
+
+    private fun loginCheck(){
+        lifecycleScope.launch {
+            PreferencesRepository.get().storedId.collect{id ->
+                if(id == null){
+                    loginIntent()
+                }
+            }
+        }
+    }
+    private fun loginIntent(){
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+        overridePendingTransition(0, 0)
     }
 }

@@ -89,11 +89,15 @@ class ProfileFragment: Fragment() {
             }else{
                 user.personInformation
             }
-            fullName.text = if(user.name.isEmpty() || user.surname.isEmpty()){
-                getString(R.string.empty_full_name)
+            var result = if(user.name.isNotEmpty()){
+                "${user.name} "
             }else{
-                "${user.name} ${user.surname}"
+                ""
             }
+            result += user.surname.ifEmpty {
+                ""
+            }
+            fullName.text = result.ifEmpty { getString(R.string.empty_full_name) }
         }
         updatePhoto(user.photoFileName)
     }

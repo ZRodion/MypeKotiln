@@ -1,5 +1,6 @@
 package com.example.mypekotlin.viewModel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.mypekotlin.PreferencesRepository
@@ -7,7 +8,6 @@ import com.example.mypekotlin.UserRepository
 import com.example.mypekotlin.model.User
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
-import java.util.*
 
 class ProfileViewModel : ViewModel() {
     private val preferencesRepository = PreferencesRepository.get()
@@ -19,16 +19,9 @@ class ProfileViewModel : ViewModel() {
 
     init {
         viewModelScope.launch {
-
-            var id = preferencesRepository.storedId.first()
-            if(id == null){
-                val newId = UUID.randomUUID()
-                userRepository.addUser(User(id = newId))
-                preferencesRepository.setStoredId(newId)
-                id = newId.toString()
-            }
-
-            userRepository.getUser(UUID.fromString(id)).collect{user ->
+            val id = preferencesRepository.storedId.first()
+            Log.d("MyTag", id.toString())
+            userRepository.getUserById(id!!).collect{ user ->
                 _user.value = user
             }
         }

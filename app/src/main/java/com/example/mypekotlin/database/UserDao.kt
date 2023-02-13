@@ -10,12 +10,18 @@ import java.util.*
 
 @Dao
 interface UserDao {
+    //if this application will be big and smart
     @Query("SELECT * FROM user WHERE id=(:id)")
-    fun getUser(id: UUID): Flow<User>
+    fun getUserById(id: UUID): Flow<User?>
+    @Query("SELECT * FROM user WHERE login=(:login) AND password=(:password)")
+    fun getUserByLogin(login:String, password: String): User?
 
     @Insert
     suspend fun addUser(user: User)
 
     @Update
     suspend fun updateUser(user: User)
+
+    @Query("SELECT EXISTS (SELECT 1 FROM user WHERE login = (:login))")
+    fun isUserExist(login: String): Boolean
 }
